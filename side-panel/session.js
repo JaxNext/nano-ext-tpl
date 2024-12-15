@@ -1,5 +1,5 @@
 // 创建会话
-export async function createSession(downloadCallback) {
+export async function createSession(downloadCallback = () => {}) {
     return await chrome.aiOriginTrial.languageModel.create({
         // signal,
         // systemPrompt: '',
@@ -16,4 +16,29 @@ export async function createSession(downloadCallback) {
             m.addEventListener('downloadprogress', downloadCallback)
         }
     });
+}
+
+// 解释
+export async function promptStreaming({
+    input,
+    context = { before: '', after: '' },
+    session,
+    downloadCallback
+}) {
+    console.log('explain', session, input);
+    if (!session) (
+        session = await createSession(downloadCallback)
+    )
+    const length = 50;
+    const prompt = `
+        Here is the text that needs to be explained:
+        ${input}
+
+        Here is the context where this text appears:
+        ${context.before} [${input}] ${context.after}
+
+        Please explain the text above using simple terms, relatable examples, and engaging analogies. Keep your explanation under ${length} words and format the response in markdown.
+    `
+    const stream = await session.promptStreaming(prompt);
+    return stream;
 }

@@ -1,6 +1,6 @@
 // 侧边栏 JavaScript
 import { checkCapabilities } from './capabilities.js';
-import { createSession } from './session.js';
+import { createSession, promptStreaming } from './session.js';
 import { formatProgress, formatSize } from './util.js';
 
 // 页面元素
@@ -17,6 +17,12 @@ const outputArea = outputBox.querySelector('.output-area');
 // 全局变量
 let isApiReady = false;
 let session = null;
+let debounceTimer = null;
+
+// 事件绑定
+inputArea.addEventListener('input', handleInput);
+
+// 初始化
 await initCheck();
 session = await createSession(downloadCallback);
 console.log('session 创建成功', session);
@@ -38,4 +44,21 @@ async function initCheck() {
 function downloadCallback(e) {
     const { loaded, total } = e;
     downloadValue.textContent = `${formatProgress(loaded, total)} (${formatSize(loaded)} / ${formatSize(total)})`;
+}
+
+// 处理输入
+function handleInput(e) {
+    if (debounceTimer) clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(explain, 1000);
+}
+
+// 解释
+async function explain() {
+    const input = inputArea.value;
+    if (!input) return;
+    const stream = await promptStreaming({ input, session, downloadCallback });
+
+    for await (const chunk of stream) {
+        outputArea.textContent = chunk;
+    }
 }
