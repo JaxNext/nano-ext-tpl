@@ -29,7 +29,7 @@ export async function promptStreaming({
     if (!session) (
         session = await createSession(downloadCallback)
     )
-    const length = 50;
+    const length = 30;
     const prompt = `
         Here is the text that needs to be explained:
         ${input}
@@ -37,7 +37,7 @@ export async function promptStreaming({
         Here is the context where this text appears:
         ${context.before} [${input}] ${context.after}
 
-        Please explain the text above using simple terms, relatable examples, and engaging analogies. Keep your explanation under ${length} words and format the response in markdown.
+        Please explain the text above using simple terms, relatable examples, and engaging analogies. Keep your explanation under ${length} words and format the response in plain text.
     `
     const stream = await session.promptStreaming(prompt);
     return stream;

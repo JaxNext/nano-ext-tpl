@@ -21,6 +21,7 @@ let debounceTimer = null;
 
 // 事件绑定
 inputArea.addEventListener('input', handleInput);
+chrome.runtime.onMessage.addListener(handleMessage);
 
 // 初始化
 await initCheck();
@@ -46,17 +47,31 @@ function downloadCallback(e) {
     downloadValue.textContent = `${formatProgress(loaded, total)} (${formatSize(loaded)} / ${formatSize(total)})`;
 }
 
+function handleInput() {
+    triggerExplain();
+}
+
+// 处理选中文本
+function handleMessage(message) {
+    if (message.type === 'textSelected') {
+        const { text, context } = message;
+        inputArea.value = text;
+        explain(context);
+    }
+}
+
 // 处理输入
-function handleInput(e) {
+function triggerExplain(e) {
     if (debounceTimer) clearTimeout(debounceTimer);
     debounceTimer = setTimeout(explain, 1000);
 }
 
 // 解释
-async function explain() {
+async function explain(context) {
+    outputArea.textContent = '处理中...';
     const input = inputArea.value;
     if (!input) return;
-    const stream = await promptStreaming({ input, session, downloadCallback });
+    const stream = await promptStreaming({ input, context, session, downloadCallback });
 
     for await (const chunk of stream) {
         outputArea.textContent = chunk;
