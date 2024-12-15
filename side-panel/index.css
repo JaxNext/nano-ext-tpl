@@ -35,7 +35,7 @@ details[open] summary {
 
 .status-box .available-row {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
 }
 
 .status-box .available-row .label {
@@ -43,6 +43,20 @@ details[open] summary {
 }
 
 .status-box .available-row .value {
+    color: #007bff;
+}
+
+.status-box .download-row {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.status-box .download-row .label {
+    font-weight: bold;
+}
+
+.status-box .download-row .value {
     color: #007bff;
 }
 
