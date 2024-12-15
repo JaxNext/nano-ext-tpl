@@ -1,0 +1,85 @@
+body {
+    background-color: #f0f0f0;
+    height: 100vh;
+    box-sizing: border-box;
+    padding: 16px;
+    margin: 0;
+}
+
+details {
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    padding: 0.5em 0.5em 0;
+}
+
+summary {
+    font-weight: bold;
+    margin: -0.5em -0.5em 0;
+    padding: 0.5em;
+}
+
+details[open] {
+    padding: 0.5em;
+}
+
+details[open] summary {
+    border-bottom: 1px solid #aaa;
+    margin-bottom: 0.5em;
+}
+  
+.status-box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.status-box .available-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.status-box .available-row .label {
+    font-weight: bold;
+}
+
+.status-box .available-row .value {
+    color: #007bff;
+}
+
+.input-box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.output-box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-box .input-area {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+}
+
+.input-box .input-title,
+.output-box .output-title {
+    margin-top: 8px;
+    font-weight: bold;
+}
+
+.output-box .output-area {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    height: calc(100vh - 500px);
+    box-sizing: border-box;
+    padding: 8px;
+    overflow-y: auto;
+}

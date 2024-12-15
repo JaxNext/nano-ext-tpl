@@ -1,0 +1,32 @@
+{
+    "name": "Nano Extension Template",
+    "version": "1.0",
+    "manifest_version": 3,
+    "description": "基于内置 AI 的浏览器扩展模板",
+    "background": {
+      "service_worker": "background.js"
+    },
+    "side_panel": {
+      "default_path": "side-panel/index.html"
+    },
+    "permissions": [
+      "sidePanel",
+      "scripting",
+      "activeTab",
+      "aiLanguageModelOriginTrial"
+    ],
+    "host_permissions": [
+      "<all_urls>"
+    ],
+    "action": {
+      "default_icon": {
+        "16": "images/icon16.png",
+        "48": "images/icon48.png",
+        "128": "images/icon128.png"
+      }
+    },
+    "trial_tokens": [
+      "Ajm5Ofyy8maM9f5kSGnshZ2rKnBikZZQWLJfPgAX0zlZ/ghyafhQN0DHKbKXe08S/L/BsAFTdYZO+cgSUKG6DwYAAAB4eyJvcmlnaW4iOiJjaHJvbWUtZXh0ZW5zaW9uOi8vaGVtbG9wY2FqaGhuaGtvYmltamttbWZvb2twZXBnZGQiLCJmZWF0dXJlIjoiQUlQcm9tcHRBUElGb3JFeHRlbnNpb24iLCJleHBpcnkiOjE3NjA0ODYzOTl9"
+    ]
+  }
+  
