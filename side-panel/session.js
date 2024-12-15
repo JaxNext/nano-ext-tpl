@@ -1,6 +1,7 @@
 // 创建会话
+let initialSession = null;
 export async function createSession(downloadCallback = () => {}) {
-    return await chrome.aiOriginTrial.languageModel.create({
+    initialSession = await chrome.aiOriginTrial.languageModel.create({
         // signal,
         // systemPrompt: '',
         // topK: 10,
@@ -16,6 +17,8 @@ export async function createSession(downloadCallback = () => {}) {
             m.addEventListener('downloadprogress', downloadCallback)
         }
     });
+    const session = await initialSession.clone();
+    return session;
 }
 
 // 解释
@@ -25,11 +28,15 @@ export async function promptStreaming({
     session,
     downloadCallback
 }) {
-    console.log('explain', session, input);
+    const { tokensLeft } = session;
+    console.log('explain', session);
     if (!session) (
         session = await createSession(downloadCallback)
     )
     const length = 30;
+    if (tokensLeft < length * 7) {
+        session = await initialSession.clone();
+    }
     const prompt = `
         Here is the text that needs to be explained:
         ${input}

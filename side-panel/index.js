@@ -13,6 +13,8 @@ const inputBox = document.querySelector('.input-box');
 const inputArea = inputBox.querySelector('.input-area');
 const outputBox = document.querySelector('.output-box');
 const outputArea = outputBox.querySelector('.output-area');
+const tokenRow = statusBox.querySelector('.token-row');
+const tokenValue = tokenRow.querySelector('.value');
 
 // 全局变量
 let isApiReady = false;
@@ -26,6 +28,7 @@ chrome.runtime.onMessage.addListener(handleMessage);
 // 初始化
 await initCheck();
 session = await createSession(downloadCallback);
+updateTokenStatus();
 console.log('session 创建成功', session);
 
 // 检查可用性
@@ -76,4 +79,14 @@ async function explain(context) {
     for await (const chunk of stream) {
         outputArea.textContent = chunk;
     }
+    updateTokenStatus();
+}
+
+function updateTokenStatus() {
+    const {
+        maxTokens = 0,
+        tokensSoFar = 0,
+        tokensLeft = 0
+    } = session;
+    // tokenValue.textContent = `${tokensSoFar} / ${maxTokens}`;
 }

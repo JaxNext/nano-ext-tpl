@@ -44,7 +44,8 @@ details[open] summary {
 }
 
 .status-box .available-row,
-.status-box .download-row {
+.status-box .download-row,
+.status-box .token-row {
     display: flex;
     align-items: center;
     padding: 8px;
@@ -53,14 +54,16 @@ details[open] summary {
 }
 
 .status-box .available-row .label,
-.status-box .download-row .label {
+.status-box .download-row .label,
+.status-box .token-row .label {
     font-weight: 600;
     color: #4a5568;
     min-width: 120px;
 }
 
 .status-box .available-row .value,
-.status-box .download-row .value {
+.status-box .download-row .value,
+.status-box .token-row .value {
     color: #3182ce;
     font-weight: 500;
 }
