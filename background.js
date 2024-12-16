@@ -36,7 +36,6 @@ function listenSelection() {
             beforeText = fullText.slice(0, selectionStart).split(/\s+/).slice(-halfLength).join(' ');
             afterText = fullText.slice(selectionStart + selectedText.length).split(/\s+/).slice(0, halfLength).join(' ');
         };
-        console.log('ttt', beforeText, afterText, selectedText);
         
         // 把选中的文本和上下文发送给 extension
         chrome.runtime.sendMessage({ 

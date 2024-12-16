@@ -29,7 +29,6 @@ export async function promptStreaming({
     downloadCallback
 }) {
     const { tokensLeft } = session;
-    console.log('explain', session);
     if (!session) (
         session = await createSession(downloadCallback)
     )

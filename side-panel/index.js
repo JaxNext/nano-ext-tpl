@@ -13,8 +13,8 @@ const inputBox = document.querySelector('.input-box');
 const inputArea = inputBox.querySelector('.input-area');
 const outputBox = document.querySelector('.output-box');
 const outputArea = outputBox.querySelector('.output-area');
-const tokenRow = statusBox.querySelector('.token-row');
-const tokenValue = tokenRow.querySelector('.value');
+// const tokenRow = statusBox.querySelector('.token-row');
+// const tokenValue = tokenRow.querySelector('.value');
 
 // 全局变量
 let isApiReady = false;
@@ -29,18 +29,34 @@ chrome.runtime.onMessage.addListener(handleMessage);
 await initCheck();
 session = await createSession(downloadCallback);
 updateTokenStatus();
-console.log('session 创建成功', session);
 
 // 检查可用性
 async function initCheck() {
     const { available } = await checkCapabilities();
-    console.log('available', available);
     const textMap = {
-        'no': 'API 不可用',
-        'after-download': '模型待下载',
-        'readily': 'API 可用',
+        'no': {
+            availableText: 'API 不可用',
+            availableColor: 'red',
+            downloadText: '--',
+            downloadColor: 'red',
+        },
+        'after-download': {
+            availableText: '模型待下载',
+            availableColor: 'orange',
+            downloadText: '',
+            downloadColor: 'orange',
+        },
+        'readily': {
+            availableText: 'API 可用',
+            availableColor: 'green',
+            downloadText: '100%',
+            downloadColor: 'green',
+        },
     }
-    availableValue.textContent = textMap[available];
+    availableValue.textContent = textMap[available].availableText;
+    availableValue.style.color = textMap[available].availableColor;
+    downloadValue.textContent = textMap[available].downloadText;
+    downloadValue.style.color = textMap[available].downloadColor;
     isApiReady = available === 'readily';
     inputArea.disabled = !isApiReady;
 }
