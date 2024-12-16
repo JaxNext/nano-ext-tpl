@@ -33,6 +33,10 @@ updateTokenStatus();
 // 检查可用性
 async function initCheck() {
     const { available } = await checkCapabilities();
+    updateStatus(available);
+}
+
+function updateStatus(available) {
     const textMap = {
         'no': {
             availableText: 'API 不可用',
@@ -63,7 +67,12 @@ async function initCheck() {
 
 function downloadCallback(e) {
     const { loaded, total } = e;
-    downloadValue.textContent = `${formatProgress(loaded, total)} (${formatSize(loaded)} / ${formatSize(total)})`;
+    const progress = formatProgress(loaded, total);
+    const size = formatSize(loaded) + ' / ' + formatSize(total);
+    downloadValue.textContent = `${progress} (${size})`;
+    if (progress === '100.00%') {
+        updateStatus('readily');
+    }
 }
 
 function handleInput() {
@@ -72,21 +81,22 @@ function handleInput() {
 
 // 处理选中文本
 function handleMessage(message) {
-    if (message.type === 'textSelected') {
+    if (message.type === 'textSelected' && isApiReady) {
         const { text, context } = message;
         inputArea.value = text;
-        explain(context);
+        triggerExplain(context);
     }
 }
 
 // 处理输入
-function triggerExplain(e) {
+function triggerExplain(context) {
     if (debounceTimer) clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(explain, 1000);
+    debounceTimer = setTimeout(explain, 1000, context);
 }
 
 // 解释
 async function explain(context) {
+    if (!isApiReady) return;
     outputArea.textContent = '处理中...';
     const input = inputArea.value;
     if (!input) return;

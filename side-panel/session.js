@@ -1,7 +1,7 @@
 // 创建会话
 let initialSession = null;
 export async function createSession(downloadCallback = () => {}) {
-    initialSession = await chrome.aiOriginTrial.languageModel.create({
+    const config = {
         // signal,
         // systemPrompt: '',
         // topK: 10,
@@ -16,7 +16,8 @@ export async function createSession(downloadCallback = () => {}) {
         monitor: m => {
             m.addEventListener('downloadprogress', downloadCallback)
         }
-    });
+    }
+    initialSession = await chrome.aiOriginTrial.languageModel.create(config);
     const session = await initialSession.clone();
     return session;
 }
@@ -28,10 +29,10 @@ export async function promptStreaming({
     session,
     downloadCallback
 }) {
-    const { tokensLeft } = session;
     if (!session) (
         session = await createSession(downloadCallback)
     )
+    const { tokensLeft } = session;
     const length = 30;
     if (tokensLeft < length * 7) {
         session = await initialSession.clone();
