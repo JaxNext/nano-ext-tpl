@@ -1,0 +1,33 @@
+{
+    "name": "Nano Ext Template",
+    "version": "1.0",
+    "manifest_version": 3,
+    "description": "内置 AI 解词助手模板",
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAszTBJ02eWRhKQgj5rGYNEM+cV4aWaLpjNxyX4Skn75jFBQ/6T38jz0AiAF6v5qMQ7rbp67dKH/A2yYQ5f1RIbX2SwqQLt4W+vqepjR+ti7kEzSmKv5JWBy3ick8ZOufLueRgsWM6UdHCqHa5+UEzvURpubmB17qkIBg0j3L1zKaIQO16+pNAgB38hsdl8DyhihUvqHb8QSXS495i/18stsuKIxBEVjoX05B3ljldamzLVm0rCE/i5PnOCBCRiw8zjh/kWFGk9kAArbQIopTPwibW5cL2pMkodtsDzOuBA0ZnH97o7+p64clqp57F4nUPl5m4dEtm3RQyHyF/4Um7AwIDAQAB",
+    "background": {
+      "service_worker": "background.js"
+    },
+    "side_panel": {
+      "default_path": "side-panel/index.html"
+    },
+    "permissions": [
+      "sidePanel",
+      "scripting",
+      "activeTab",
+      "aiLanguageModelOriginTrial"
+    ],
+    "host_permissions": [
+      "<all_urls>"
+    ],
+    "action": {
+      "default_icon": {
+        "16": "images/icon16.png",
+        "48": "images/icon48.png",
+        "128": "images/icon128.png"
+      }
+    },
+    "trial_tokens": [
+      "AicoRnhdvngvdXXITjlu3ytVuIzy0KJE43hOMq3CFnd2MI97dKSRQ4f4fFXYxGCofPUnu57BuhEZ7XUIgVSITQsAAAB4eyJvcmlnaW4iOiJjaHJvbWUtZXh0ZW5zaW9uOi8vbmlhYXBvZ2ZmYmprZWRvaGNvY2Rlb25haW1jYm5mZmkiLCJmZWF0dXJlIjoiQUlQcm9tcHRBUElGb3JFeHRlbnNpb24iLCJleHBpcnkiOjE3NjA0ODYzOTl9"
+    ]
+  }
+  
