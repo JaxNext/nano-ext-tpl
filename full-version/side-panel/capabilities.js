@@ -7,9 +7,5 @@ export async function checkCapabilities() {
     } else {
         capabilities = await chrome.aiOriginTrial.languageModel.capabilities();
     }
-    chrome.runtime.sendMessage({
-        type: 'availability',
-        capabilities
-    })
     return capabilities;
 }

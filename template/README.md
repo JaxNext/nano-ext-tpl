@@ -16,7 +16,6 @@
 // 点击 icon 打开或关闭侧边栏
 chrome.sidePanel
     .setPanelBehavior({ openPanelOnActionClick: true })
-    .catch((error) => console.error(error));
 ```
 
 保存后刷新扩展，点击 icon 可打开侧边栏。
@@ -29,12 +28,11 @@ chrome.sidePanel
 <div class="label">输入</div>
 <div class="input-box">
     <textarea id="input-area"></textarea>
-    <button id="gen-btn">生成</button>
 </div>
 
 <div class="label">输出</div>
 <div class="output-box">
-    <textarea id="output-area"></textarea>
+    <textarea id="output-area" rows="10"></textarea>
 </div>
 ```
 
@@ -55,7 +53,7 @@ const outputArea = document.getElementById('output-area');
 
 ```JavaScript
 chrome.tabs.onActivated.addListener((activeInfo) => {
-    chrome.tabs.get(activeInfo.tabId, (tab) => {
+    chrome.tabs.get(activeInfo.tabId, tab => {
         if (tab.url?.startsWith('chrome://')) return;
         // 给左侧页面注入脚本
         chrome.scripting.executeScript({
@@ -106,11 +104,11 @@ function listenSelection() {
 在 `side-panel/index.js` 中添加如下代码：
 
 ```JavaScript
-chrome.runtime.onMessage.addListener((message) => {
+chrome.runtime.onMessage.addListener(message => {
     if (message.type === 'textSelected') {
         const { text, context } = message;
         inputArea.value = text;
-        explain(text, context); // todo
+        explain(text, context);
     }
 });
 ```
@@ -127,10 +125,9 @@ chrome.runtime.onMessage.addListener((message) => {
 await check();
 
 async function check() {
-    const func = chrome?.aiOriginTrial?.languageModel?.capabilities;
-
-    if (!func) return Promise.reject('no capabilities');
-    const capabilities = await func();
+    if (!chrome?.aiOriginTrial?.languageModel?.capabilities) return Promise.reject('no capabilities');
+    
+    const capabilities = await chrome.aiOriginTrial.languageModel.capabilities();
     const { available } = capabilities;
     console.log('available', available); // no, after-download, readily
     
