@@ -8,7 +8,9 @@
 
 # 逐步开发
 
-## 1. 点击 icon 打开侧边栏
+## 1. 启动 & UI
+
+### 1.1 点击 icon 打开侧边栏
 
 在 `background.js` 中添加以下代码：
 
@@ -20,7 +22,7 @@ chrome.sidePanel
 
 保存后刷新扩展，点击 icon 可打开侧边栏。
 
-## 2. 搭建侧边栏 UI
+## 1.2 搭建侧边栏 UI
 
 在 `side-panel/index.html` 的 `<body>` 标签中添加如下代码：
 
@@ -45,9 +47,9 @@ const outputArea = document.getElementById('output-area');
 
 保存后刷新，侧边栏会显示输入和输出区域。
 
-## 3. 自动捕获
+## 2. 自动捕获
 
-### 3.1 监听选中文本
+### 2.1 监听选中文本
 
 在 `background.js` 中添加如下代码：
 
@@ -99,7 +101,7 @@ function listenSelection() {
 }
 ```
 
-### 3.2 侧边栏接收文本
+### 2.2 侧边栏接收文本
 
 在 `side-panel/index.js` 中添加如下代码：
 
@@ -115,9 +117,9 @@ chrome.runtime.onMessage.addListener(message => {
 
 保存后刷新扩展，在左侧页面选中文字后，会自动捕获选中的文本和上下文，并发送给侧边栏。
 
-## 4. 核心逻辑：Prompt API
+## 3. 核心逻辑：Prompt API
 
-### 4.1 检测可用性
+### 3.1 检测可用性
 
 在 `side-panel/index.js` 中添加如下代码：
 
@@ -136,7 +138,7 @@ async function check() {
 }
 ```
 
-### 4.2 创建 session
+### 3.2 创建 session
 
 在 `side-panel/index.js` 中添加如下代码：
 
@@ -158,7 +160,7 @@ async function createSession() {
 }
 ```
 
-### 4.3 生成解释
+### 3.3 生成解释
 
 在 `side-panel/index.js` 中添加如下代码：
 
